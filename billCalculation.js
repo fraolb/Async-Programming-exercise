@@ -19,6 +19,11 @@ const validateBill=(billAmt)=>{
        })
     })
 }
+const totalBillAmount = async(billAmt, discountPercentage)=>{
+    const amount = await validateBill(billAmt)
+    const total = await calculateTotalBill(amount, discountPercentage)
+    return total
+}
 
 billAmt = process.argv[2]
 discountPercentage = process.argv[3]
@@ -28,8 +33,16 @@ discountPercentage = process.argv[3]
 // }, error =>{
 //     console.log(error)
 // })
-validateBill(billAmt).then((amount)=>{
-   return calculateTotalBill(amount, discountPercentage);console.log(amount)
-}).then((result)=>{console.log("The discounted bill amount is ", result)}).catch(error=>{
+
+
+// validateBill(billAmt).then((amount)=>{
+//    return calculateTotalBill(amount, discountPercentage);console.log(amount)
+// }).then((result)=>{console.log("The discounted bill amount is ", result)}).catch(error=>{
+//     console.log(error)
+// })
+
+totalBillAmount(billAmt, discountPercentage).then((result)=>{
+    console.log("The discounted bill amount is ", result)
+}).catch(error =>{
     console.log(error)
 })
